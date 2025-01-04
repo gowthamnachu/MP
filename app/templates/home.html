@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Mathematical Progression{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <h1 class="heading text-light animated-text">Welcome to Mathematical Progression</h1>
+        <p class="text-light lead mt-3 mb-5">Learn more about mathematical progression, optimization techniques, and linear programming.</p>
+
+        <div class="btn-container">
+            <button class="btn btn-explore" onclick="window.location.href='{% url 'graphical' %}'">Explore Graphical Method</button>
+            <button class="btn btn-explore" onclick="window.location.href='{% url 'simplex' %}'">Explore Simplex Method</button>
+        </div>
+    </div>
+
+    <!-- Additional Information Section -->
+    <section class="info-section">
+        <h2 class="text-light mt-5">Understanding Mathematical Progression</h2>
+        <p class="text-light mt-3">
+            Mathematical progressions are sequences of numbers that follow a specific pattern. They are classified into two main types: 
+            arithmetic progressions (AP) and geometric progressions (GP). Understanding these progressions is crucial for solving a wide range of 
+            mathematical and real-world problems. 
+        </p>
+        <p class="text-light">
+            In an **arithmetic progression**, the difference between consecutive terms is constant. For example, the sequence 2, 4, 6, 8, 10, ... 
+            is an arithmetic progression where the common difference is 2. On the other hand, a **geometric progression** involves terms where 
+            each term is obtained by multiplying the previous one by a constant ratio. For instance, the sequence 2, 6, 18, 54, 162, ... is a 
+            geometric progression where the common ratio is 3.
+        </p>
+        
+        <h3 class="text-light mt-5">Applications of Progressions</h3>
+        <p class="text-light">
+            Progressions have a broad range of applications in fields like finance, physics, and computer science. For instance, in **finance**, 
+            arithmetic progressions are often used in calculating loan payments or investment growth over time. Similarly, geometric progressions are 
+            used in **population growth models** or **interest calculations**.
+        </p>
+
+        <h2 class="text-light mt-5">Optimization and Linear Programming</h2>
+        <p class="text-light">
+            Linear programming (LP) is an optimization technique used to achieve the best outcome in a mathematical model whose requirements are 
+            represented by linear relationships. LP is extensively used in various industries, such as supply chain management, production planning, 
+            and resource allocation. The core objective of linear programming is to maximize or minimize an objective function subject to constraints.
+        </p>
+        <p class="text-light">
+            In **linear programming**, the goal is typically to find the optimal solution to a problem, such as maximizing profits or minimizing costs, 
+            under a set of linear constraints. The **graphical method** is a visual approach used for solving LP problems with two variables, whereas the 
+            **Simplex method** is a more advanced algorithm for higher-dimensional problems. Both methods are effective for finding the best solution for 
+            optimization problems.
+        </p>
+
+        <h3 class="text-light mt-5">How Does Linear Programming Work?</h3>
+        <p class="text-light">
+            The general form of a linear programming problem consists of:
+        </p>
+        <ul class="text-light">
+            <li><strong>Objective Function:</strong> A linear function that needs to be maximized or minimized, such as profit or cost.</li>
+            <li><strong>Constraints:</strong> Linear equations or inequalities that restrict the possible solutions.</li>
+            <li><strong>Decision Variables:</strong> The unknowns that we are solving for, typically denoted as x₁, x₂, ..., xn.</li>
+        </ul>
+
+        <p class="text-light">
+            To solve an LP problem, we first plot the constraints on a graph, identify the feasible region, and then find the optimal solution, 
+            which typically occurs at one of the corner points of the feasible region.
+        </p>
+
+        <h2 class="text-light mt-5">Applications of Linear Programming</h2>
+        <p class="text-light">
+            Linear programming is widely applied in real-world problems, including:
+        </p>
+        <ul class="text-light">
+            <li><strong>Production Optimization:</strong> Companies use LP to determine the optimal number of units to produce to maximize profits.</li>
+            <li><strong>Supply Chain Management:</strong> LP helps in determining the most cost-effective way to allocate resources across various stages.</li>
+            <li><strong>Diet Problems:</strong> LP is used to find the most cost-efficient diet plan that meets nutritional requirements.</li>
+            <li><strong>Transportation Problems:</strong> LP is applied to minimize transportation costs while satisfying demand and supply constraints.</li>
+        </ul>
+
+        <h3 class="text-light mt-5">Why Linear Programming?</h3>
+        <p class="text-light">
+            Linear programming is essential because it provides a systematic and efficient way to solve complex optimization problems. The ability to 
+            model real-world scenarios and obtain an optimal solution helps businesses and researchers make more informed decisions.
+        </p>
+
+        <div class="btn-container mt-5">
+            <button class="btn btn-explore" onclick="window.location.href='{% url 'graphical' %}'">Start Exploring Linear Programming</button>
+        </div>
+    </section>
+
+    <style>
+        /* Shared Gradient Animation for Dashboard and Button */
+        @keyframes dashboardGradient {
+            0% {
+                background-color: #1e1e1e;
+            }
+            25% {
+                background-color: #2c3e50;
+            }
+            50% {
+                background-color: #8e44ad;
+            }
+            75% {
+                background-color: #34495e;
+            }
+            100% {
+                background-color: #16a085;
+            }
+        }
+
+        /* Section Styling */
+        .info-section {
+            padding: 50px 20px;
+            background-color: transparent;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        h2, h3 {
+            font-size: 2rem;
+            margin-top: 40px;
+            color: #f5f5f5;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #bbb;
+        }
+
+        /* Button container in the information section */
+        .btn-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn-explore {
+            background: linear-gradient(45deg, #1e1e1e, #2c3e50, #8e44ad, #34495e, #16a085);
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 10px;
+            animation: dashboardGradient 10s ease-in-out infinite alternate;
+            transition: all 0.4s ease;
+            outline: none;
+        }
+
+        .btn-explore:hover {
+            background: linear-gradient(45deg, #34495e, #16a085, #8e44ad, #1e1e1e, #2c3e50);
+            box-shadow: 0 0 20px rgba(26, 188, 156, 0.6);
+            transform: scale(1.05);
+        }
+    </style>
+{% endblock %}

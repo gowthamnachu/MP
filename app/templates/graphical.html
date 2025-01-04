@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block title %}Linear Programming Solver{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="text-center text-light mb-4 animated-text">Linear Programming Solver</h1>
+
+        <form method="post" class="form-container">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="c" class="form-label text-light">Objective Coefficients (comma-separated):</label>
+                <input type="text" name="c" id="c" class="form-input" required placeholder="E.g., 5, 4">
+            </div>
+
+            <div class="form-group">
+                <label for="A" class="form-label text-light">Inequality Coefficients (row-wise, semicolon-separated):</label>
+                <input type="text" name="A" id="A" class="form-input" required placeholder="E.g., 1, 2; 3, 1">
+            </div>
+
+            <div class="form-group">
+                <label for="b" class="form-label text-light">Right-hand Side Values (comma-separated):</label>
+                <input type="text" name="b" id="b" class="form-input" required placeholder="E.g., 20, 30">
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-futuristic pulse-button">Solve</button>
+            </div>
+        </form>
+
+        {% if plot_url %}
+            <div class="solution-section">
+                <h2 class="text-light">Solution</h2>
+                <p><strong class="text-light">Optimal Point:</strong> {{ optimal_point }}</p>
+                <p><strong class="text-light">Optimal Value:</strong> {{ optimal_value }}</p>
+                <div class="text-center">
+                    <div class="graph-container">
+                        <img src="{{ plot_url }}" alt="Solution Graph" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        /* Global body styling */
+        body {
+            background-color: #121212; /* Darker background */
+            color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styling with animation */
+        .animated-text {
+            animation: textGlitch 2s infinite alternate;
+            font-size: 3rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @keyframes textGlitch {
+            0% {
+                text-shadow: 2px 2px 4px rgba(0, 255, 255, 0.7), -2px -2px 4px rgba(255, 0, 255, 0.7);
+            }
+            50% {
+                text-shadow: -2px -2px 4px rgba(0, 255, 255, 0.7), 2px 2px 4px rgba(255, 0, 255, 0.7);
+            }
+            100% {
+                text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.7), -2px -2px 4px rgba(255, 0, 255, 0.7);
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 40px;
+            background-color: transparent; /* Removed background box */
+            border-radius: 12px;
+            box-shadow: none;
+        }
+
+        h1, h2 {
+            color: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .form-container {
+            background-color: transparent; /* No background box */
+            padding: 0; /* No padding around form */
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #f5f5f5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input {
+            background: transparent;
+            border: 2px solid #7f8c8d;
+            color: #fff;
+            padding: 14px;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: none;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .form-input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.7);
+            background: transparent;
+        }
+
+        .form-input::placeholder {
+            color: #bdc3c7;
+            font-style: italic;
+        }
+
+        .btn-futuristic {
+            background: linear-gradient(45deg, #1abc9c, #16a085);
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+        }
+
+        .btn-futuristic:hover {
+            background: linear-gradient(45deg, #16a085, #1abc9c);
+            box-shadow: 0 0 20px rgba(26, 188, 156, 0.6);
+            transform: scale(1.05);
+        }
+
+        .pulse-button {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .solution-section {
+            margin-top: 50px;
+            background-color: transparent; /* Removed background box */
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: none;
+        }
+
+        .solution-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            color: #f5f5f5;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .graph-container {
+            max-width: 100%;
+            margin-top: 20px;
+            border-radius: 12px;
+            border: 3px solid #2980b9;
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.2);
+            padding: 10px;
+        }
+
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .text-light {
+            color: #f5f5f5 !important;
+        }
+
+        /* New futuristic form layout */
+        .form-input {
+            background: transparent;
+            border: 1px solid #7f8c8d;
+            color: #fff;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .form-input:focus {
+            background: transparent;
+            border: 1px solid #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.7);
+        }
+    </style>
+{% endblock %}

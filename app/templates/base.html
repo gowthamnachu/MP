@@ -1,0 +1,466 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home Page{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/favicon1.ico' %}" type="image/x-icon">
+    <!-- Include Google Fonts for 'Dancing Script' -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Set body styles */
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Dashboard styles */
+        .dashboard {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            color: #ffffff;
+            animation: changeColor 10s ease-in-out infinite alternate;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes changeColor {
+            0% {
+                background-color: #1e1e1e;
+            }
+            25% {
+                background-color: #2c3e50;
+            }
+            50% {
+                background-color: #8e44ad;
+            }
+            75% {
+                background-color: #34495e;
+            }
+            100% {
+                background-color: #16a085;
+            }
+        }
+
+        .dashboard video {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 25%;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .dashboard h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        }
+
+        .home-btn {
+            background-color: #34495e;
+            color: white;
+            font-size: 1rem;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            margin-left: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .home-btn:hover {
+            background-color: #2c3e50;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        .dropdown button {
+            background-color: #34495e;
+            color: white;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .dropdown button:hover {
+            background-color: #2c3e50;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #34495e;
+            min-width: 160px;
+            z-index: 1;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #2c3e50;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .container {
+            margin-top: 120px;
+            max-width: 800px;
+            width: 100%;
+            padding: 30px;
+            background-color: black;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .form-container {
+            background-color: black;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .credits-section {
+            margin-top: 40px;
+            background-color: #333;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .credits-section h2 {
+            font-size: 1.5rem;
+            color: #f5f5f5;
+            margin-bottom: 20px;
+        }
+
+        .professor, .developer {
+            display: inline-block;
+            margin: 15px;
+            text-align: center;
+            width: 150px;
+        }
+
+        .professor img, .developer img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .professor h3, .developer h3 {
+            color: #fff;
+            margin-top: 10px;
+            font-size: 1.2rem;
+        }
+
+        .professor p, .developer p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #222;
+            color: #aaa;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: 0 -2px 5px rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <!-- Video Logo -->
+        <video src="{% static 'videos/logo.mp4' %}" autoplay muted loop class="logo">
+            Your browser does not support the video tag.
+        </video>
+        <h1>Mathematical Programming</h1>
+
+        <!-- Home Button -->
+        <a href="{% url 'home' %}">
+            <button class="home-btn">Home</button>
+        </a>
+
+        <!-- Linear Programming Dropdown -->
+        <div class="dropdown">
+            <button>Linear Programming</button>
+            <div class="dropdown-content">
+                <a href="{% url 'graphical' %}">Graphical Method</a> 
+                <a href="{% url 'simplex' %}">Simplex Method</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+<!-- Footer Section -->
+<footer>
+    <div class="footer-content">
+        <div class="company-info">
+            <p>&copy; 2025 <a href="#">Mathematical Programming</a>. All Rights Reserved.</p>
+            <p>Designed with ❤️ by <a href="#">Your Company Name</a></p>
+        </div>
+
+        <!-- Credits with Developer on Left, Quotes in the Center, Professor on Right -->
+        <div class="credits">
+            <!-- Developer (Left) -->
+            <div class="developer box">
+                <img src="{% static 'images/developer1.jpg' %}" alt="Developer 1">
+                <h3>N Gowtham</h3>
+                <p>Developer</p>
+            </div>
+
+            <!-- Quote Section (Middle) -->
+            <div class="quotes box">
+                <blockquote>
+                    "Mathematical programming is the art of optimizing reality using numbers and logic."
+                </blockquote>
+                
+            </div>
+
+            <!-- Professor (Right) -->
+            <div class="professor box">
+                <img src="{% static 'images/professor1.jpg' %}" alt="Professor 1">
+                <h3>Prof. Sudharshan Babu</h3>
+                <p>Professor of AI & Data Science</p>
+            </div>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="footer-details">
+            <p>Check out some related videos:</p>
+            <div class="youtube-links">
+                <a href="https://www.youtube.com/watch?v=your_video_id_1" target="_blank">Intro to Mathematical Programming</a> |
+                <a href="https://www.youtube.com/watch?v=your_video_id_2" target="_blank">Solving Linear Programming Problems</a> |
+                <a href="https://www.youtube.com/watch?v=your_video_id_3" target="_blank">Advanced Topics in Mathematical Programming</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer {
+        background-color: #1f1f1f;
+        color: #ddd;
+        padding: 25px 20px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.1);
+        font-family: 'Arial', sans-serif;
+        position: relative;
+        overflow: hidden;
+    }
+
+    footer .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    footer .company-info {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        color: #bbb;
+        opacity: 0;
+        animation: fadeIn 1s forwards 0.5s;
+    }
+
+    footer .company-info a {
+        color: #bbb;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    footer .company-info a:hover {
+        color: #16a085;
+    }
+
+    footer .credits {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 20px;
+        flex-wrap: nowrap; /* Prevent wrapping */
+        opacity: 0;
+        animation: fadeIn 1s forwards 1s;
+    }
+
+    footer .credits .box {
+        flex: 1; /* Make the boxes take equal width */
+        text-align: center;
+        margin: 20px;
+        position: relative;
+        animation: fadeIn 1s forwards 1.5s;
+        background-color: #333;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    footer .credits .box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+    }
+
+    footer .credits .box img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    footer .credits .box img:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+    }
+
+    footer .credits h3 {
+        color: #fff;
+        margin-top: 10px;
+        font-size: 1.2rem;
+    }
+
+    footer .credits p {
+        color: #aaa;
+        font-size: 0.9rem;
+    }
+
+    /* Quote Section (Middle) */
+    footer .quotes blockquote {
+        font-size: 1.5rem;
+        color: #fff;
+        margin-bottom: 15px;
+        font-style: italic;
+        border-left: 4px solid #16a085;
+        padding-left: 15px;
+    }
+
+    footer .quotes p {
+        font-size: 1rem;
+        color: #aaa;
+        font-style: normal;
+    }
+
+    footer .footer-details {
+        margin-top: 25px;
+        font-size: 1rem;
+        opacity: 0;
+        animation: fadeIn 1s forwards 2s;
+    }
+
+    footer .footer-details p {
+        color: #bbb;
+        margin-bottom: 10px;
+    }
+
+    footer .footer-details .youtube-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        font-size: 0.9rem;
+        color: #bbb;
+    }
+
+    footer .footer-details .youtube-links a {
+        color: #bbb;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    footer .footer-details .youtube-links a:hover {
+        color: #fff;
+        background-color: #16a085;
+        transform: translateY(-2px);
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+    
+     
+    
+    
+
+</body>
+</html>
