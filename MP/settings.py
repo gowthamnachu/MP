@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2%epq2sf6#iboah51&b@zs_y6i(utme@o5p+e0#0di%d8md208
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mathematicalprogression','127.0.0.1']
+ALLOWED_HOSTS = ['mathematicalprogramming','127.0.0.1']
 
 
 # Application definition
